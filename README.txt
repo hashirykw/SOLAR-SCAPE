@@ -1,8 +1,10 @@
 SolarScape Solutions — website (v3)
 ===================================
+Live at https://solar-scape.nexlyr.solutions/
 
 Six pages, each one self-contained (styles, scripts, logo, posters and rendered images inside the file):
   index.html  about.html  services.html  projects.html  savings.html  contact.html
+Plus: og-*.jpg share images, favicon.png, apple-touch-icon.png, icon-512.png, site.webmanifest, robots.txt, sitemap.xml
 
 What's in it
   - SOLAR preloader (scene inside the letters, dive through the O, under 2 s) on the first visit,
@@ -12,6 +14,11 @@ What's in it
   - Archivo expanded / hollow outline / Instrument Serif italic headline mixes
   - Glass UI, rolling-label buttons, compact dropdown menu and compact chat tab
   - Synthesised sound effects (toggle in the nav, remembered per visitor)
+  - A 3D centrepiece on every inner page: sun with orbiting modules (About), exploding
+    solar module (Services), tracking solar farm (Projects), rising energy bars (Savings),
+    office globe Karachi-Dubai-London (Contact)
+  - Share images per page (og-*.jpg, 1200x630) for WhatsApp / LinkedIn / Facebook / X previews,
+    canonical URLs, app icons, web manifest, robots.txt and sitemap.xml for the domain above
 
 DEPLOY
   Keep all six files together in one folder (no subfolders).
