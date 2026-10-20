@@ -344,10 +344,10 @@ html.js .wp.in > img{scale:1}
 .foot__social a{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--ink-line);transition:box-shadow .3s,color .3s,background .3s,transform .5s var(--e-out)}
 .foot__social a:hover{box-shadow:inset 0 0 0 1px #C3C9D4;color:#E9EDF3;background:rgba(205,212,224,.08);transform:translateY(-3px)}
 .foot__social svg{width:17px;height:17px}
-.fmark{position:relative;margin:70px auto 0;width:max-content;max-width:100%;line-height:.82;user-select:none;pointer-events:none}
-.fmark div{font-family:var(--f-display);font-weight:900;font-stretch:125%;font-size:clamp(3rem,13.4vw,13.6rem);letter-spacing:-.05em;white-space:nowrap;text-transform:uppercase}
-.fmark .fm-o{color:transparent;-webkit-text-stroke:1px rgba(200,215,255,.2)}
-.fmark .fm-f{position:absolute;inset:0;background:linear-gradient(0deg,#8D95A6,#C3C9D4 40%,#E9EDF3 80%);-webkit-background-clip:text;background-clip:text;color:transparent;clip-path:inset(calc(100% - var(--fl,0) * 100%) 0 0 0);filter:drop-shadow(0 0 30px rgba(200,208,222,.25))}
+.fmark{position:relative;margin:70px 0 0;width:100%;overflow:hidden;line-height:.86;padding-bottom:.04em;user-select:none;pointer-events:none;text-align:center}
+.fmark div{font-family:var(--f-display);font-weight:900;font-stretch:125%;font-size:var(--fms,10.4vw);letter-spacing:-.04em;white-space:nowrap;text-transform:uppercase}
+.fmark .fm-o{width:max-content;margin-inline:auto;color:transparent;-webkit-text-stroke:1px rgba(200,215,255,.2)}
+.fmark .fm-f{position:absolute;inset:0;background:linear-gradient(0deg,#8D95A6,#C3C9D4 40%,#E9EDF3 80%);-webkit-background-clip:text;background-clip:text;color:transparent;clip-path:inset(calc(100% - var(--fl,0) * 100%) 0 0 0)}
 .foot__bottom{margin-top:28px;padding-top:24px;border-top:1px solid var(--ink-line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.8rem}
 
 /* ---------- floating actions + assistant (compact tab, never full screen) */
@@ -1005,7 +1005,12 @@ html.js [data-split].in .sc{transform:none}
   $$('[data-fill]').forEach(el => { const ws = $$('.fw', el); ScrollTrigger.create({ trigger: el, start: 'top 85%', end: 'bottom 45%', scrub: true, onUpdate: s => { const k = Math.round(s.progress * ws.length); ws.forEach((w, i) => w.classList.toggle('on', i < k)); } }); });
   $$('[data-parallax]').forEach(el => { const img = $('img', el); if (img) gsap.fromTo(img, { yPercent: -7 }, { yPercent: 7, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } }); });
   $$('[data-count]').forEach(c => { const to = +c.dataset.count, o = { v: 0 }; c.textContent = '0'; gsap.to(o, { v: to, duration: 1.8, ease: 'power3.out', scrollTrigger: { trigger: c, start: 'top 92%', once: true }, onUpdate: () => c.textContent = Math.round(o.v) }); });
-  const fm = $('.fmark'); if (fm) ScrollTrigger.create({ trigger: '.foot', start: 'top bottom', end: 'bottom bottom', scrub: .5, onUpdate: s => fm.style.setProperty('--fl', s.progress.toFixed(3)) });
+  const fm = $('.fmark');
+  if (fm) { // size the wordmark so it fills the footer width exactly, at any screen size
+    const fit = () => { const o = $('.fm-o', fm); fm.style.setProperty('--fms', '100px'); const w = o.offsetWidth; if (w) fm.style.setProperty('--fms', (100 * fm.clientWidth / w * .995).toFixed(2) + 'px'); };
+    fit(); addEventListener('resize', fit); if (d.fonts) d.fonts.ready.then(fit);
+  }
+  if (fm) ScrollTrigger.create({ trigger: '.foot', start: 'top bottom', end: 'bottom bottom', scrub: .5, onUpdate: s => fm.style.setProperty('--fl', s.progress.toFixed(3)) });
 
   /* tape + marquee react to scroll speed */
   const rows = $$('.tape__row, .marquee__row').map(r => { const dir = +(r.dataset.dir || -1); return gsap.fromTo(r, { xPercent: dir < 0 ? 0 : -50 }, { xPercent: dir < 0 ? -50 : 0, duration: +(r.dataset.speed || 40), ease: 'none', repeat: -1 }); });
